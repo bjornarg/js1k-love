@@ -10,6 +10,7 @@ var points_out = [];
 M = Math;
 C = M.cos;
 S = M.sin;
+P = M.PI;
 function heart_curve(t) {
   return {
     x: width/6 * M.pow(S(t), 3),
@@ -48,7 +49,7 @@ function move_point(p) {
 function draw(p) {
   a.fillStyle=p.c;
   a.beginPath();
-  a.arc(p.x, p.y, 4, 0, M.PI*2, 1);
+  a.arc(p.x, p.y, 4, 0, P*2, 1);
   a.closePath();
   a.fill();
 }
@@ -61,9 +62,9 @@ function create_point(from, to) {
     c: "hsl("+random(361)+","+random(101)+"%,"+random(50)+"%)"
   };
 }
-for (var t = -M.PI/2; t < M.PI/2; t+=M.PI*.01) {
+for (var t = -P/2; t < P/2; t+=P*.01) {
   if (t < -.25 || t > .25)
-    heart_pts.push({t: heart_curve(t), b: heart_curve(t+M.PI)});
+    heart_pts.push({t: heart_curve(t), b: heart_curve(t+P)});
 }
 setInterval(function () {
   a.fillStyle = "rgba(0,0,0,0.15)";
