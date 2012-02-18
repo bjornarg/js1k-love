@@ -56,13 +56,12 @@ function create_point(from, to) {
     z: from.z,
     s: 2,
     to: to,
-    c: "hsl("+random(361)+","+random(101)+"%,"+random(50)+"%)",
-    r: 4
+    c: "hsl("+random(361)+","+random(101)+"%,"+random(50)+"%)"
   };
 }
 for (var t = -Math.PI/2; t < Math.PI/2; t+=Math.PI*.01) {
-  if (t > -.25 && t < .25) continue;
-  heart_pts.push({t: heart_curve(t), b: heart_curve(t+Math.PI)});
+  if (t < -.25 || t > .25)
+    heart_pts.push({t: heart_curve(t), b: heart_curve(t+Math.PI)});
 }
 setInterval(function () {
   a.fillStyle = "rgba(0,0,0,0.15)";
@@ -78,8 +77,6 @@ setInterval(function () {
     if (!move_point(pt)) {
       points_out.splice(i, 1);
     } else {
-      pt.to.r = 4;
-      pt.r = 4;
       draw(point(pt));
     }
   }
