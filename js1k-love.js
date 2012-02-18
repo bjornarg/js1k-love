@@ -38,7 +38,7 @@ function point(p) {
   return pt;
 }
 function move_point(p) {
-  p.y += p.s;
+  p.y += 2;
   if (p.y > p.to.y) return 0;
   return 1;
 }
@@ -54,7 +54,6 @@ function create_point(from, to) {
     x: from.x,
     y: from.y,
     z: from.z,
-    s: 2,
     to: to,
     c: "hsl("+random(361)+","+random(101)+"%,"+random(50)+"%)"
   };
