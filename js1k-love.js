@@ -8,10 +8,12 @@ var heart_pts = [];
 var max_points_out = 250;
 var points_out = [];
 M = Math;
+C = M.cos;
+S = M.sin;
 function heart_curve(t) {
   return {
-    x: width/6 * M.pow(M.sin(t), 3),
-    y: height/-60 * (15*M.cos(t) - 5 * M.cos(2*t) - 2 * M.cos(3*t) - M.cos(4 * t)),
+    x: width/6 * M.pow(S(t), 3),
+    y: height/-60 * (15*C(t) - 5 * C(2*t) - 2 * C(3*t) - C(4 * t)),
     z: 0
   };
 }
@@ -27,8 +29,8 @@ function copy(p) {
 }
 function rotate(p) {
   var x = p.x;
-  p.x=M.cos(rY)*x + M.sin(rY)*p.z;
-  p.z=-M.sin(rY)*x + M.cos(rY)*p.z;
+  p.x=C(rY)*x + S(rY)*p.z;
+  p.z=-S(rY)*x + C(rY)*p.z;
   return p;
 }
 function point(p) {
