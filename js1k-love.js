@@ -1,5 +1,7 @@
+// Resize canvas to window size
 var width = c.width = window.innerWidth;
 var height = c.height = window.innerHeight;
+
 var mX = width/2;
 var mY = height*.4;
 var mZ = 500;
@@ -7,6 +9,7 @@ var rY = 0;
 var heart_pts = [];
 var max_points_out = 250;
 var points_out = [];
+// Alias Math functions
 M = Math;
 C = M.cos;
 S = M.sin;
