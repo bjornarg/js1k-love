@@ -69,10 +69,10 @@ setInterval(function () {
   a.fillStyle = "rgba(0,0,0,0.15)";
   a.fillRect(0, 0, width, height);
   if (points_out.length < max_points_out) {
-    loc = random(heart_pts.length);
-    points_out.push(create_point(heart_pts[loc].t, heart_pts[loc].b));
-    loc = random(heart_pts.length);
-    points_out.push(create_point(heart_pts[loc].t, heart_pts[loc].b));
+    L = random(heart_pts.length);
+    points_out.push(create_point(heart_pts[L].t, heart_pts[L].b));
+    L = random(heart_pts.length);
+    points_out.push(create_point(heart_pts[L].t, heart_pts[L].b));
   }
   for (var i = 0; i < points_out.length; i++) {
     var pt = points_out[i];
