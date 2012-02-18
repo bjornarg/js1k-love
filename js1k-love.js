@@ -7,15 +7,16 @@ var rY = 0;
 var heart_pts = [];
 var max_points_out = 250;
 var points_out = [];
+M = Math;
 function heart_curve(t) {
   return {
-    x: width/6 * Math.pow(Math.sin(t), 3),
-    y: height/-60 * (15*Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4 * t)),
+    x: width/6 * M.pow(M.sin(t), 3),
+    y: height/-60 * (15*M.cos(t) - 5 * M.cos(2*t) - 2 * M.cos(3*t) - M.cos(4 * t)),
     z: 0
   };
 }
 function random(max) {
-  return Math.floor(Math.random()*max);
+  return M.floor(M.random()*max);
 }
 function copy(p) {
   var newObj = {};
@@ -26,8 +27,8 @@ function copy(p) {
 }
 function rotate(p) {
   var x = p.x;
-  p.x=Math.cos(rY)*x + Math.sin(rY)*p.z;
-  p.z=-Math.sin(rY)*x + Math.cos(rY)*p.z;
+  p.x=M.cos(rY)*x + M.sin(rY)*p.z;
+  p.z=-M.sin(rY)*x + M.cos(rY)*p.z;
   return p;
 }
 function point(p) {
@@ -45,7 +46,7 @@ function move_point(p) {
 function draw(p) {
   a.fillStyle=p.c;
   a.beginPath();
-  a.arc(p.x, p.y, 4, 0, Math.PI*2, 1);
+  a.arc(p.x, p.y, 4, 0, M.PI*2, 1);
   a.closePath();
   a.fill();
 }
@@ -58,9 +59,9 @@ function create_point(from, to) {
     c: "hsl("+random(361)+","+random(101)+"%,"+random(50)+"%)"
   };
 }
-for (var t = -Math.PI/2; t < Math.PI/2; t+=Math.PI*.01) {
+for (var t = -M.PI/2; t < M.PI/2; t+=M.PI*.01) {
   if (t < -.25 || t > .25)
-    heart_pts.push({t: heart_curve(t), b: heart_curve(t+Math.PI)});
+    heart_pts.push({t: heart_curve(t), b: heart_curve(t+M.PI)});
 }
 setInterval(function () {
   a.fillStyle = "rgba(0,0,0,0.15)";
