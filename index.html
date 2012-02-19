@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>js1k-love.js</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id="background"></div>
+<div id='container'>
+  
+  <div class='section'>
+    <div class='docs'><h1>js1k-love.js</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <p>Resize canvas to window size</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="kd">var</span> <span class="nx">width</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">innerWidth</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">height</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">innerHeight</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">mX</span> <span class="o">=</span> <span class="nx">width</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">mY</span> <span class="o">=</span> <span class="nx">height</span><span class="o">*</span><span class="p">.</span><span class="mi">4</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">mZ</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">rY</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">heart_pts</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">var</span> <span class="nx">max_points_out</span> <span class="o">=</span> <span class="mi">250</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">points_out</span> <span class="o">=</span> <span class="p">[];</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>Alias Math functions</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nx">M</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">;</span>
+<span class="nx">C</span> <span class="o">=</span> <span class="nx">M</span><span class="p">.</span><span class="nx">cos</span><span class="p">;</span>
+<span class="nx">S</span> <span class="o">=</span> <span class="nx">M</span><span class="p">.</span><span class="nx">sin</span><span class="p">;</span>
+<span class="nx">P</span> <span class="o">=</span> <span class="nx">M</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">heart_curve</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>Creates a point along the heart curve</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">x</span><span class="o">:</span> <span class="nx">width</span><span class="o">/</span><span class="mi">6</span> <span class="o">*</span> <span class="nx">M</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="nx">S</span><span class="p">(</span><span class="nx">t</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="nx">y</span><span class="o">:</span> <span class="nx">height</span><span class="o">/-</span><span class="mi">60</span> <span class="o">*</span> <span class="p">(</span><span class="mi">15</span><span class="o">*</span><span class="nx">C</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="nx">C</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nx">t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">C</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="nx">t</span><span class="p">)</span> <span class="o">-</span> <span class="nx">C</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="nx">t</span><span class="p">)),</span>
+    <span class="nx">z</span><span class="o">:</span> <span class="mi">0</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">random</span><span class="p">(</span><span class="nx">max</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <p>Randoms from 0 to max-1</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="k">return</span> <span class="nx">M</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">M</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">max</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">copy</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Copies an object</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">newObj</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">newObj</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">newObj</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">rotate</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <p>Simplified point rotation (since we're only rotating one axis)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+  <span class="nx">p</span><span class="p">.</span><span class="nx">x</span><span class="o">=</span><span class="nx">C</span><span class="p">(</span><span class="nx">rY</span><span class="p">)</span><span class="o">*</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">S</span><span class="p">(</span><span class="nx">rY</span><span class="p">)</span><span class="o">*</span><span class="nx">p</span><span class="p">.</span><span class="nx">z</span><span class="p">;</span>
+  <span class="nx">p</span><span class="p">.</span><span class="nx">z</span><span class="o">=-</span><span class="nx">S</span><span class="p">(</span><span class="nx">rY</span><span class="p">)</span><span class="o">*</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">C</span><span class="p">(</span><span class="nx">rY</span><span class="p">)</span><span class="o">*</span><span class="nx">p</span><span class="p">.</span><span class="nx">z</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">p</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">point</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>Rotate and transform a 3D point to 2D</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">pt</span> <span class="o">=</span> <span class="nx">copy</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+  <span class="nx">rotate</span><span class="p">(</span><span class="nx">pt</span><span class="p">);</span>
+  <span class="nx">pt</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">mX</span><span class="o">+</span><span class="nx">pt</span><span class="p">.</span><span class="nx">x</span><span class="o">*</span><span class="nx">mZ</span><span class="o">/</span><span class="p">(</span><span class="nx">pt</span><span class="p">.</span><span class="nx">z</span><span class="o">+</span><span class="nx">mZ</span><span class="p">);</span>
+  <span class="nx">pt</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">mY</span><span class="o">+</span><span class="nx">pt</span><span class="p">.</span><span class="nx">y</span><span class="o">*</span><span class="nx">mZ</span><span class="o">/</span><span class="p">(</span><span class="nx">pt</span><span class="p">.</span><span class="nx">z</span><span class="o">+</span><span class="nx">mZ</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">pt</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">move_point</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Moves a point along the y-axis and checks if it's reached/passed it's 
+destination. Returns 0 (false) if passed, 1 (true) if not.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="nx">p</span><span class="p">.</span><span class="nx">y</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">y</span> <span class="o">&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">to</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Draws a point.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="nx">a</span><span class="p">.</span><span class="nx">fillStyle</span><span class="o">=</span><span class="nx">p</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
+  <span class="nx">a</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+  <span class="nx">a</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">P</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nx">a</span><span class="p">.</span><span class="nx">closePath</span><span class="p">();</span>
+  <span class="nx">a</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">create_point</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>Creates a point with a random color, a starting position and a target
+point.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">x</span><span class="o">:</span> <span class="nx">from</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span>
+    <span class="nx">y</span><span class="o">:</span> <span class="nx">from</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span>
+    <span class="nx">z</span><span class="o">:</span> <span class="nx">from</span><span class="p">.</span><span class="nx">z</span><span class="p">,</span>
+    <span class="nx">to</span><span class="o">:</span> <span class="nx">to</span><span class="p">,</span>
+    <span class="nx">c</span><span class="o">:</span> <span class="s2">&quot;hsl(&quot;</span><span class="o">+</span><span class="nx">random</span><span class="p">(</span><span class="mi">361</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;,&quot;</span><span class="o">+</span><span class="nx">random</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;%,&quot;</span><span class="o">+</span><span class="nx">random</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;%)&quot;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">t</span> <span class="o">=</span> <span class="o">-</span><span class="nx">P</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="nx">t</span> <span class="o">&lt;</span> <span class="nx">P</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="nx">t</span><span class="o">+=</span><span class="nx">P</span><span class="o">*</span><span class="p">.</span><span class="mi">01</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>We remove all points between -0.25 and 0.25, because these points lie in
+the small "dip" in the heart, and would generate a lot of points on
+almost the same x-position.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="k">if</span> <span class="p">(</span><span class="nx">t</span> <span class="o">&lt;</span> <span class="o">-</span><span class="p">.</span><span class="mi">25</span> <span class="o">||</span> <span class="nx">t</span> <span class="o">&gt;</span> <span class="p">.</span><span class="mi">25</span><span class="p">)</span>
+    <span class="nx">heart_pts</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">t</span><span class="o">:</span> <span class="nx">heart_curve</span><span class="p">(</span><span class="nx">t</span><span class="p">),</span> <span class="nx">b</span><span class="o">:</span> <span class="nx">heart_curve</span><span class="p">(</span><span class="nx">t</span><span class="o">+</span><span class="nx">P</span><span class="p">)});</span>
+<span class="p">}</span>
+<span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>Partly clear the screen. Using 0.15 alpha will make the points leave a
+"trail"</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="nx">a</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&quot;rgba(0,0,0,0.15)&quot;</span><span class="p">;</span>
+  <span class="nx">a</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">points_out</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="nx">max_points_out</span><span class="p">)</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <p>Generate two new randomly positioned points. This could probably be
+optimized.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">L</span> <span class="o">=</span> <span class="nx">random</span><span class="p">(</span><span class="nx">heart_pts</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+    <span class="nx">points_out</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">create_point</span><span class="p">(</span><span class="nx">heart_pts</span><span class="p">[</span><span class="nx">L</span><span class="p">].</span><span class="nx">t</span><span class="p">,</span> <span class="nx">heart_pts</span><span class="p">[</span><span class="nx">L</span><span class="p">].</span><span class="nx">b</span><span class="p">));</span>
+    <span class="nx">L</span> <span class="o">=</span> <span class="nx">random</span><span class="p">(</span><span class="nx">heart_pts</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+    <span class="nx">points_out</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">create_point</span><span class="p">(</span><span class="nx">heart_pts</span><span class="p">[</span><span class="nx">L</span><span class="p">].</span><span class="nx">t</span><span class="p">,</span> <span class="nx">heart_pts</span><span class="p">[</span><span class="nx">L</span><span class="p">].</span><span class="nx">b</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">points_out</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">pt</span> <span class="o">=</span> <span class="nx">points_out</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">move_point</span><span class="p">(</span><span class="nx">pt</span><span class="p">))</span> <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>Remove points that have passed their destination.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>      <span class="nx">points_out</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">draw</span><span class="p">(</span><span class="nx">point</span><span class="p">(</span><span class="nx">pt</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">}</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      <p>Make the heart rotate!</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="nx">rY</span> <span class="o">+=</span> <span class="p">.</span><span class="mi">02</span><span class="p">;</span>
+<span class="p">},</span> <span class="mi">30</span><span class="p">);</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
